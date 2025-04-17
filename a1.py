@@ -159,7 +159,6 @@ def main():
             elif command["type"] == "P":
                 args = command["args"]
                 error_p = False
-                processed = False
                 i = 0
                 if current_notebook is None:
                         print("ERROR")
@@ -168,38 +167,33 @@ def main():
                     option = args[i]
                     if option == "-usr":
                         print(current_notebook.username)
-                        processed = True
                         i += 1
                     elif option == "-pwd":
                         print(current_notebook.password)
-                        processed = True
                         i += 1
                     elif option == "-bio":
                         print(current_notebook.bio)
-                        processed = True
                         i += 1
                     elif option == "-diaries":
                         diaries_t = current_notebook.get_diaries()
                         for i, diary in enumerate(diaries_t):
                             print(f"{i}: {diary.entry}") 
                         i += 1
-                        processed = True
                     elif option == "-diary":
                         if i + 1 >= len(args):
-                            print("ERROR1")
+                            print("ERROR")
                             error_p = True
                             break
                         try:
                             index_d = int(args[i + 1])
                         except Exception:
-                            print("ERROR2")
+                            print("ERROR")
                             break
                         diaries_test = current_notebook.get_diaries()
                         if 0 <= index_d < len(diaries_test):
                             print(f"{diaries_test[index_d].entry}")
-                            processed = True
                         else:
-                            print("ERROR3")
+                            print("ERROR")
                             error_p = True
                             break
                         i += 2
@@ -209,17 +203,15 @@ def main():
                         print(current_notebook.bio)
                         for i, diary in enumerate(current_notebook.get_diaries()):
                             print(f"{diary.entry}")
-                        processed = True
                         i += 1
                     else:
-                        #print("ERROR4")
                         error_p = True
                         break
                 if error_p:
-                    print("ERROR5")
+                    print("ERROR")
                 
         except Exception as e:
-            print("ERRORR")  
+            print("ERROR")  
             traceback.print_exc()  
 if __name__ == "__main__":
     main()
