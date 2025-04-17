@@ -1,0 +1,15 @@
+{
+    "username": "John",
+    "password": "John123",
+    "bio": "I am a dev",
+    "_diaries": [
+        {
+            "entry": "hellllo",
+            "timestamp": 1744823840.841412
+        },
+        {
+            "entry": "hi",
+            "timestamp": 1744823861.8778949
+        }
+    ]
+}

@@ -99,49 +99,42 @@ def main():
                     if option == "-usr":
                         if i + 1 >= len(args):
                             edit_error = True
-                            break
                         new_username = args[i + 1]
                         current_notebook.username = new_username
                         i += 2
                     elif option == "-pwd":
                         if i + 1 >= len(args):
                             edit_error = True
-                            break
                         new_password = args[i + 1]
                         current_notebook.password = new_password
                         i += 2
                     elif option == "-bio":
                         if i + 1 >= len(args):
                             edit_error = True
-                            break
                         new_bio = args[i + 1]
                         current_notebook.bio = new_bio
                         i += 2
                     elif option == "-add":
                         if i + 1 >= len(args):
-                            edit_error = True
-                            break
+                            edit_error = True 
                         new_add = args[i + 1]
                         current_notebook.add_diary(Diary(new_add))
                         i += 2
                     elif option == "-del":
                         if i + 1 >= len(args):
                             edit_error = True
-                            break
                         try:
                             del_index = int(args[i + 1])
                         except Exception:
                             edit_error = True
                         if not current_notebook.del_diary(del_index):
                             edit_error = True
-                            break
                         i += 2
                     else:
                         edit_error = True
-                        break
                 if edit_error:
                     print("ERROR")
-                    continue
+                    break
                 try:
                     current_notebook.save(current_path)
                 except Exception:
@@ -168,6 +161,7 @@ def main():
             elif command["type"] == "P":
                 args = command["args"]
                 tested = False
+                p_error = False
                 if current_notebook is None:
                     print("ERROR")
                     continue
@@ -190,19 +184,22 @@ def main():
                 if "-diary" in args:
                     i = args.index("-diary")
                     if i + 1 >= len(args):
-                        print("ERROR")
+                        print("ERRORSSS")
+                        p_error = True
                         continue
                     try:
                         index_d = int(args[i + 1])
                     except Exception:
                         print("ERROR")
+                        p_error = True
                         continue
                     diaries = current_notebook.get_diaries()
                     if 0 <= index_d < len(diaries):
-                        print(f"{index_d}: {diaries[index_d].entry}")
+                        print(f"{diaries[index_d].entry}")
                         tested = True
                     else:
                         print("ERROR")
+                        p_error = True
                         continue
                 if "-all" in args:
                     print(current_notebook.username)
@@ -213,13 +210,10 @@ def main():
                     tested = True
                 if not tested:
                     print("ERROR")
-               
+                if p_error == True:
+                    break
         except Exception as e:
-            print("ERROR")
-
-
-            
-           
+            print("ERROR")         
         
 if __name__ == "__main__":
     main()
