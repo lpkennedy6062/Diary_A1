@@ -93,53 +93,56 @@ def main():
                 args = command["args"]
                 i = 0
                 edit_error = False
-
                 while i < len(args):
                     option = args[i]
-                    if option == "-usr":
-                        if i + 1 >= len(args):
+                    try:
+                        if option == "-usr":
+                            if i + 1 >= len(args):
+                                edit_error = True
+                            new_username = args[i + 1]
+                            current_notebook.username = new_username
+                            current_notebook.save(current_path)
+                            i += 2
+                        elif option == "-pwd":
+                            if i + 1 >= len(args):
+                                edit_error = True
+                            new_password = args[i + 1]
+                            current_notebook.password = new_password
+                            current_notebook.save(current_path)
+                            i += 2
+                        elif option == "-bio":
+                            if i + 1 >= len(args):
+                                edit_error = True
+                            new_bio = args[i + 1]
+                            current_notebook.bio = new_bio
+                            current_notebook.save(current_path)
+                            i += 2
+                        elif option == "-add":
+                            if i + 1 >= len(args):
+                                edit_error = True 
+                            new_add = args[i + 1]
+                            current_notebook.add_diary(Diary(new_add))
+                            current_notebook.save(current_path)
+                            i += 2
+                        elif option == "-del":
+                            if i + 1 >= len(args):
+                                edit_error = True
+                            try:
+                                del_index = int(args[i + 1])
+                            except Exception:
+                                edit_error = True
+                            if not current_notebook.del_diary(del_index):
+                                edit_error = True
+                            i += 2
+                            current_notebook.save(current_path)
+                        else:
                             edit_error = True
-                        new_username = args[i + 1]
-                        current_notebook.username = new_username
-                        i += 2
-                    elif option == "-pwd":
-                        if i + 1 >= len(args):
-                            edit_error = True
-                        new_password = args[i + 1]
-                        current_notebook.password = new_password
-                        i += 2
-                    elif option == "-bio":
-                        if i + 1 >= len(args):
-                            edit_error = True
-                        new_bio = args[i + 1]
-                        current_notebook.bio = new_bio
-                        i += 2
-                    elif option == "-add":
-                        if i + 1 >= len(args):
-                            edit_error = True 
-                        new_add = args[i + 1]
-                        current_notebook.add_diary(Diary(new_add))
-                        i += 2
-                    elif option == "-del":
-                        if i + 1 >= len(args):
-                            edit_error = True
-                        try:
-                            del_index = int(args[i + 1])
-                        except Exception:
-                            edit_error = True
-                        if not current_notebook.del_diary(del_index):
-                            edit_error = True
-                        i += 2
-                    else:
-                        edit_error = True
-                if edit_error:
-                    print("ERROR")
-                    break
-                try:
-                    current_notebook.save(current_path)
-                except Exception:
-                    print("ERROR")
-                    continue
+                        if edit_error:
+                            print("ERROR")
+                            break  
+                    except Exception:
+                        print("ERROR")
+                        break
 
             elif command["type"] == "D":
                 args = command["args"]
@@ -156,61 +159,60 @@ def main():
                 except Exception:
                     print("ERROR")
                     continue
-
-
             elif command["type"] == "P":
                 args = command["args"]
-                tested = False
-                p_error = False
+                error_p = False
+                processed = False
                 if current_notebook is None:
                         print("ERROR")
                         continue
                 for i, option in enumerate(args):
-                    if "-usr" in args:
+                    if option == "-usr":
                         print(current_notebook.username)
-                        tested = True
-                    if "-pwd" in args:
+                        processed = True
+                    elif option == "-pwd":
                         print(current_notebook.password)
-                        tested = True
-                    if "-bio" in args:
+                        processed = True
+                    elif option == "-bio":
                         print(current_notebook.bio)
-                        tested = True
-                    if "-diaries" in args:
+                        processed = True
+                    elif option == "-diaries":
                         diaries_t = current_notebook.get_diaries()
                         for i, diary in enumerate(diaries_t):
                             print(f"{i}: {diary.entry}") 
-                        tested = True
-
-                    if "-diary" in args:
+                        processed = True
+                    elif option == "-diary":
                         i = args.index("-diary")
                         if i + 1 >= len(args):
-                            print("ERROR1")
-                            p_error = True
+                            print("ERROR")
+                            error_p = True
                             break
                         try:
                             index_d = int(args[i + 1])
                         except Exception:
-                            print("ERROR2")
-                            p_error = True
+                            print("ERROR")
                             break
                         diaries = current_notebook.get_diaries()
                         if 0 <= index_d < len(diaries):
                             print(f"{diaries[index_d].entry}")
-                            tested = True
+                            processed = True
                         else:
-                            print("ERROR3")
-                            p_error = True
+                            print("ERROR")
+                            error_p = True
                             break
-                    if "-all" in args:
+                    elif option == "-all":
                         print(current_notebook.username)
                         print(current_notebook.password)
                         print(current_notebook.bio)
                         for i, diary in enumerate(current_notebook.get_diaries()):
                             print(f"{diary.entry}")
-                        tested = True
-                    if not tested:
-                        print("ERROR4")
-            
+                        processed = True
+                    else:
+                        print("ERROR")
+                        error_p = True
+                        break
+                if not processed and not error_p:
+                    print("ERROR")
                 
         except Exception as e:
             print("ERRORR")         
