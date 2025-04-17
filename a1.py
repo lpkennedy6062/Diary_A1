@@ -1,7 +1,5 @@
 # Starter code for assignment 1 in ICS 32 Programming with Software Libraries in Python
-
 # Replace the following placeholders with your information.
-
 # Liam Kennedy
 # lpkenned@uci.edu
 # 81845142
@@ -9,7 +7,7 @@
 from command_parser import parse_command
 from notebook import Notebook, Diary
 from pathlib import Path
-
+import traceback
 def main():
     current_notebook = None
     current_path = None
@@ -47,7 +45,6 @@ def main():
                 username = input("")
                 password = input("")
                 bio = input("")
-
 
                 new_notebook = Notebook(username, password, bio)
                 new_notebook.save(notebook_file)
@@ -163,43 +160,49 @@ def main():
                 args = command["args"]
                 error_p = False
                 processed = False
+                i = 0
                 if current_notebook is None:
                         print("ERROR")
                         continue
-                for i, option in enumerate(args):
+                while i < len(args):
+                    option = args[i]
                     if option == "-usr":
                         print(current_notebook.username)
                         processed = True
+                        i += 1
                     elif option == "-pwd":
                         print(current_notebook.password)
                         processed = True
+                        i += 1
                     elif option == "-bio":
                         print(current_notebook.bio)
                         processed = True
+                        i += 1
                     elif option == "-diaries":
                         diaries_t = current_notebook.get_diaries()
                         for i, diary in enumerate(diaries_t):
                             print(f"{i}: {diary.entry}") 
+                        i += 1
                         processed = True
                     elif option == "-diary":
-                        i = args.index("-diary")
                         if i + 1 >= len(args):
-                            print("ERROR")
+                            print("ERROR1")
                             error_p = True
                             break
                         try:
                             index_d = int(args[i + 1])
                         except Exception:
-                            print("ERROR")
+                            print("ERROR2")
                             break
-                        diaries = current_notebook.get_diaries()
-                        if 0 <= index_d < len(diaries):
-                            print(f"{diaries[index_d].entry}")
+                        diaries_test = current_notebook.get_diaries()
+                        if 0 <= index_d < len(diaries_test):
+                            print(f"{diaries_test[index_d].entry}")
                             processed = True
                         else:
-                            print("ERROR")
+                            print("ERROR3")
                             error_p = True
                             break
+                        i += 2
                     elif option == "-all":
                         print(current_notebook.username)
                         print(current_notebook.password)
@@ -207,15 +210,16 @@ def main():
                         for i, diary in enumerate(current_notebook.get_diaries()):
                             print(f"{diary.entry}")
                         processed = True
+                        i += 1
                     else:
-                        print("ERROR")
+                        #print("ERROR4")
                         error_p = True
                         break
-                if not processed and not error_p:
-                    print("ERROR")
+                if error_p:
+                    print("ERROR5")
                 
         except Exception as e:
-            print("ERRORR")         
-        
+            print("ERRORR")  
+            traceback.print_exc()  
 if __name__ == "__main__":
     main()

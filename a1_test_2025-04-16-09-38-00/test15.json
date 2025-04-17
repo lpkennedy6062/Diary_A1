@@ -1,0 +1,23 @@
+{
+    "username": "liam",
+    "password": "hi",
+    "bio": "cute",
+    "_diaries": [
+        {
+            "entry": "deriod",
+            "timestamp": 1744921851.851892
+        },
+        {
+            "entry": "snatched",
+            "timestamp": 1744921863.464215
+        },
+        {
+            "entry": "tea",
+            "timestamp": 1744921869.565899
+        },
+        {
+            "entry": "emily",
+            "timestamp": 1744924352.1241229
+        }
+    ]
+}
