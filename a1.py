@@ -163,57 +163,57 @@ def main():
                 tested = False
                 p_error = False
                 if current_notebook is None:
-                    print("ERROR")
-                    continue
-                
-                if "-usr" in args:
-                    print(current_notebook.username)
-                    tested = True
-                if "-pwd" in args:
-                    print(current_notebook.password)
-                    tested = True
-                if "-bio" in args:
-                    print(current_notebook.bio)
-                    tested = True
-                if "-diaries" in args:
-                    diaries_t = current_notebook.get_diaries()
-                    for i, diary in enumerate(diaries_t):
-                        print(f"{i}: {diary.entry}") 
-                    tested = True
-
-                if "-diary" in args:
-                    i = args.index("-diary")
-                    if i + 1 >= len(args):
-                        print("ERRORSSS")
-                        p_error = True
-                        continue
-                    try:
-                        index_d = int(args[i + 1])
-                    except Exception:
                         print("ERROR")
-                        p_error = True
                         continue
-                    diaries = current_notebook.get_diaries()
-                    if 0 <= index_d < len(diaries):
-                        print(f"{diaries[index_d].entry}")
+                for i, option in enumerate(args):
+                    if "-usr" in args:
+                        print(current_notebook.username)
                         tested = True
-                    else:
-                        print("ERROR")
-                        p_error = True
-                        continue
-                if "-all" in args:
-                    print(current_notebook.username)
-                    print(current_notebook.password)
-                    print(current_notebook.bio)
-                    for i, diary in enumerate(current_notebook.get_diaries()):
-                        print(f"{diary.entry}")
-                    tested = True
-                if not tested:
-                    print("ERROR")
-                if p_error == True:
-                    break
+                    if "-pwd" in args:
+                        print(current_notebook.password)
+                        tested = True
+                    if "-bio" in args:
+                        print(current_notebook.bio)
+                        tested = True
+                    if "-diaries" in args:
+                        diaries_t = current_notebook.get_diaries()
+                        for i, diary in enumerate(diaries_t):
+                            print(f"{i}: {diary.entry}") 
+                        tested = True
+
+                    if "-diary" in args:
+                        i = args.index("-diary")
+                        if i + 1 >= len(args):
+                            print("ERROR1")
+                            p_error = True
+                            break
+                        try:
+                            index_d = int(args[i + 1])
+                        except Exception:
+                            print("ERROR2")
+                            p_error = True
+                            break
+                        diaries = current_notebook.get_diaries()
+                        if 0 <= index_d < len(diaries):
+                            print(f"{diaries[index_d].entry}")
+                            tested = True
+                        else:
+                            print("ERROR3")
+                            p_error = True
+                            break
+                    if "-all" in args:
+                        print(current_notebook.username)
+                        print(current_notebook.password)
+                        print(current_notebook.bio)
+                        for i, diary in enumerate(current_notebook.get_diaries()):
+                            print(f"{diary.entry}")
+                        tested = True
+                    if not tested:
+                        print("ERROR4")
+            
+                
         except Exception as e:
-            print("ERROR")         
+            print("ERRORR")         
         
 if __name__ == "__main__":
     main()
