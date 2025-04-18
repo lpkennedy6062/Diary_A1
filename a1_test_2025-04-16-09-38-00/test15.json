@@ -1,15 +1,11 @@
 {
-    "username": "liam",
+    "username": "bob",
     "password": "hi",
-    "bio": "cute",
+    "bio": "worrrrd",
     "_diaries": [
         {
             "entry": "deriod",
             "timestamp": 1744921851.851892
-        },
-        {
-            "entry": "snatched",
-            "timestamp": 1744921863.464215
         },
         {
             "entry": "tea",
@@ -18,6 +14,22 @@
         {
             "entry": "emily",
             "timestamp": 1744924352.1241229
+        },
+        {
+            "entry": "word",
+            "timestamp": 1744952948.223509
+        },
+        {
+            "entry": "snatched",
+            "timestamp": 1744952969.717084
+        },
+        {
+            "entry": "orange",
+            "timestamp": 1744952984.233262
+        },
+        {
+            "entry": "foot",
+            "timestamp": 1744952984.235067
         }
     ]
 }

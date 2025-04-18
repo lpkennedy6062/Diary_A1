@@ -14,7 +14,14 @@ def main():
     while True:
         try:
             user_input = input()
-            command = parse_command(user_input)
+            if not user_input.strip():
+                print("ERROR")
+                continue
+            try:
+                command = parse_command(user_input)
+            except Exception:
+                print("ERROR")
+                continue
             if command["type"] == "Q":
                break
        
@@ -181,19 +188,17 @@ def main():
                         i += 1
                     elif option == "-diary":
                         if i + 1 >= len(args):
-                            print("ERROR")
                             error_p = True
                             break
                         try:
                             index_d = int(args[i + 1])
                         except Exception:
-                            print("ERROR")
+                            error_p = True
                             break
                         diaries_test = current_notebook.get_diaries()
                         if 0 <= index_d < len(diaries_test):
                             print(f"{diaries_test[index_d].entry}")
                         else:
-                            print("ERROR")
                             error_p = True
                             break
                         i += 2
@@ -209,9 +214,12 @@ def main():
                         break
                 if error_p:
                     print("ERROR")
-                
+            else:
+                print("ERROR")
+                continue
         except Exception as e:
             print("ERROR")  
             traceback.print_exc()  
+
 if __name__ == "__main__":
     main()
