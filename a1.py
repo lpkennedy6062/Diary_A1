@@ -9,7 +9,9 @@ from notebook import Notebook, Diary
 from pathlib import Path
 import traceback
 def main() -> None:
-    """Contains the main logic and command loop needed to run the Diary program."""
+    """Contains the main logic and command loop needed to run the Diary program.
+    Takes user commands (Q, C, O, E, P) and then with those inputs it will implement 
+    the code to the respected command."""
     current_notebook = None
     current_path = None
     while True:
