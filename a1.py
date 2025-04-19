@@ -8,7 +8,8 @@ from command_parser import parse_command
 from notebook import Notebook, Diary
 from pathlib import Path
 import traceback
-def main():
+def main() -> None:
+    """Contains the main logic and command loop needed to run the Diary program."""
     current_notebook = None
     current_path = None
     while True:
@@ -163,6 +164,7 @@ def main():
                 except Exception:
                     print("ERROR")
                     continue
+
             elif command["type"] == "P":
                 args = command["args"]
                 error_p = False
@@ -222,4 +224,6 @@ def main():
             traceback.print_exc()  
 
 if __name__ == "__main__":
+    """Runs the main command look for the Diary program.
+       Takes user inputs and sorts through commands."""
     main()
